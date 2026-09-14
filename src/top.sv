@@ -1,6 +1,6 @@
-`include "package.sv"
-`include "interface.sv"
-`include "design.sv"
+//`include "package.sv"
+//`include "interface.sv"
+//`include "design.sv"
 module top;
 import uvm_pkg::*;
 import pkg::*;
@@ -29,7 +29,11 @@ initial begin
   ARESETn=1;
 
 end
+initial begin
+  $dumpfile("dump.vcd");
+  $dumpvars;
+end
+ 
+  
 
 endmodule
-
-

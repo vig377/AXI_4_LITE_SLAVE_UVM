@@ -27,17 +27,18 @@ endclocking
 
 clocking inp_mon_cb@(posedge ACLK);
   default input #1 output #0;
-  input AWADDR,AWPROT,AWVALID,WDATA,WSTRB,WVALID,BREADY,ARADDR,ARPROT,ARVALID,RREADY;
+  input AWADDR,AWPROT,AWVALID,WDATA,WSTRB,WVALID,ARADDR,ARPROT,ARVALID,RREADY,BREADY;
+  input AWREADY,WREADY,ARREADY,BVALID,RVALID;
 endclocking
 
 clocking out_mon_cb@(posedge ACLK);
   default input #1 output #0;
   input AWREADY,WREADY,BRESP,BVALID,ARREADY,RDATA,RRESP,RVALID;
+  input BREADY,RREADY;
 endclocking
 
 modport drv(clocking drv_cb,input ACLK,input AWREADY,WREADY,BVALID,ARREADY,RVALID);
-modport inp_mon(clocking inp_mon_cb,input ACLK,input AWREADY,WREADY,ARREADY );
-modport out_mon(clocking out_mon_cb,input BREADY,RREADY,ACLK);
+  modport inp_mon(clocking inp_mon_cb,input ACLK);
+modport out_mon(clocking out_mon_cb,input ACLK);
 
 endinterface
-

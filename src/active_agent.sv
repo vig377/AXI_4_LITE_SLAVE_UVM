@@ -1,6 +1,6 @@
 class active_agent extends uvm_agent;
 
-`uvm_component_utils(active_agent);
+`uvm_component_utils(active_agent)
 
 driver drv;
 input_monitor mon;
@@ -27,4 +27,3 @@ function void connect_phase(uvm_phase phase);
   `uvm_info("AGENT","RD PORT CONNECTD",UVM_LOW)
 endfunction
 endclass
-

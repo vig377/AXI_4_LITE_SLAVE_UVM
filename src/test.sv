@@ -6,7 +6,7 @@ environment e;
 
 function new(string name,uvm_component parent);
   super.new(name,parent);
-endfunction 
+endfunction
 
 function void build_phase(uvm_phase phase);
   super.build_phase(phase);
@@ -19,23 +19,16 @@ function void end_of_elaboration_phase(uvm_phase phase);
 endfunction
 
 task run_phase(uvm_phase phase);
-  wrt_seq sq1;
-  rd_seq sq2;
+//   rd_seq sq2;
+//   wrt_seq sq1;
+  virtual_seq v_sq;
   phase.raise_objection(this,"objection raised");
-  sq1=wrt_seq::type_id::create("sq1");
-  sq2=rd_seq::type_id::create("sq2");
-  fork
-    begin
-    `uvm_info("TEST","BEFORE WRITE START",UVM_LOW)
-    sq1.start(e.ag1.sqr1);
-    `uvm_info("TEST","AFTER WRITE_START",UVM_LOW)
-    end
-    begin
-    `uvm_info("TEST","BEFORE READ  START",UVM_LOW)
-    sq2.start(e.ag1.sqr2);
-    `uvm_info("TEST","AFTER READ START",UVM_LOW)
-    end
-  join
+  v_sq=virtual_seq::type_id::create("v_Sq");
+  v_sq.start(e.v_sqr);
+//   sq1=wrt_seq::type_id::create("sq1");
+//   sq2=rd_seq::type_id::create("sq2");
+//   sq1.start(e.ag1.sqr1);
+//   sq2.start(e.ag1.sqr2);
   phase.drop_objection(this,"objection dropped");
 endtask
 

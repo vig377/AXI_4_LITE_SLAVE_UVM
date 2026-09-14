@@ -30,5 +30,3 @@ function new(string name="trans");
 endfunction
 
 endclass
-
-
