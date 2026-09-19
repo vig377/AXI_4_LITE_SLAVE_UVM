@@ -41,4 +41,37 @@ modport drv(clocking drv_cb,input ACLK,input AWREADY,WREADY,BVALID,ARREADY,RVALI
   modport inp_mon(clocking inp_mon_cb,input ACLK);
 modport out_mon(clocking out_mon_cb,input ACLK);
 
+property write_addr_handshake;
+@(posedge ACLK ) disable iff (!ARESETn)
+  (AWVALID && !AWREADY) |=>(AWVALID);
+  endproperty
+
+property write_data_handshake;
+@(posedge ACLK) disable iff (!ARESETn)
+  (WVALID && !WREADY) |=>WVALID;
+  endproperty
+
+property write_response_handshake;
+@(posedge ACLK)disable iff(!ARESETn)
+  (BREADY && !BVALID)|=>BREADY;
+endproperty
+
+property read_addr_handshake;
+@(posedge ACLK) disable iff(!ARESETn)
+  (ARVALID && !ARREADY)|=>ARVALID;
+endproperty
+
+property read_data_handshake;
+@(posedge ACLK) disable iff(!ARESETn)
+  (!RVALID && RREADY)|=>RREADY;
+endproperty
+
+
+assert property (write_addr_handshake) $display("WRITE ADDR HANDSHAKE ASSERTION PASSED");else $display("WRITE ADDR HANDSHAKE FAILED");
+assert property (write_data_handshake) $display("WRITE DATA HANDSHAKE ASSERTION PASSED");else $display("WRITE DATA HANDSHAKE FAILED");
+assert property (write_response_handshake) $display("WRITE RESPONSE HANDSHAKE ASSERTION PASSED");else $display("WRITE RESPONSE HANDSHAKE FAILED");
+assert property (read_addr_handshake) $display("READ ADDR HANDSHAKE ASSERTION PASSED");else $display("READ ADDR HANDSHAKE FAILED");
+assert property (read_data_handshake) $display("READ DATA  HANDSHAKE ASSERTION PASSED");else $display("READ DATA HANDSHAKE FAILED");
+
+cover property (write_addr_handshake);
 endinterface

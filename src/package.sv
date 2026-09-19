@@ -11,6 +11,7 @@ import uvm_pkg::*;
 `include "strobe_all_random.sv"
 `include "strobe_all_one.sv"
 `include "unaligned_write.sv"
+`include "aligned_all_write.sv"
 `include "read_only_write.sv"
 `include "dec_write.sv"
 `include "read_unaligned.sv"

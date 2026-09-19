@@ -14,7 +14,7 @@ class first_addr_then_data extends uvm_sequence#(trans);
     	req.randomize() with {req.AWVALID==1;req.AWADDR[1:0]==0;req.AWADDR<63;req.WVALID==0;req.WDATA inside{[1:10]};req.WSTRB==4'b1111;req.BREADY==0;req.ARVALID==0;req.RREADY==0;};
     	//waddr=req.AWADDR;
         finish_item(req);
-        `uvm_do_with(req,{req.AWVALID==0;req.WVALID==1;req.WSTRB inside{[1:4]};req.BREADY==1;req.ARVALID==0;req.RREADY==0;});
+        `uvm_do_with(req,{req.AWVALID==0;req.WVALID==1;req.WSTRB == 4'b1111;req.BREADY==1;req.ARVALID==0;req.RREADY==0;});
       end
   endtask
 endclass

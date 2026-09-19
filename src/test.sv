@@ -23,6 +23,7 @@ task run_phase(uvm_phase phase);
 //   wrt_seq sq1;
   virtual_seq v_sq;
   phase.raise_objection(this,"objection raised");
+  uvm_top.set_timeout(20000ns);
   v_sq=virtual_seq::type_id::create("v_Sq");
   v_sq.start(e.v_sqr);
 //   sq1=wrt_seq::type_id::create("sq1");

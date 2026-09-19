@@ -13,6 +13,7 @@ class virtual_seq extends uvm_sequence;
   read_unaligned sq10;
   write_only_read sq11;
   dec_read sq12;
+  aligned_all_write sq13;
  
   `uvm_declare_p_sequencer(virtual_sqr)
   
@@ -33,15 +34,18 @@ class virtual_seq extends uvm_sequence;
     sq10= read_unaligned::type_id::create("sq10");
     sq11=write_only_read::type_id::create("sq11");
     sq12=dec_read::type_id::create("sq12");
+    sq13=aligned_all_write::type_id::create("sq13");
     $display("FIRST ADDR THEN DATA TEST\n");
     sq1.start(p_sequencer.sqr1);
-//     sq2.start(p_sequencer.sqr2);
-    $display("STRB ALL 0 \n");
+   //sq2.start(p_sequencer.sqr2);
+   $display("STRB ALL 0 \n");
     sq3.start(p_sequencer.sqr1);
     //sq2.start(p_sequencer.sqr2);
     $display("FIRST DATA THEN ADDR TEST\n");
     sq4.start(p_sequencer.sqr1);
 //     sq2.start(p_sequencer.sqr2);
+    $display("ALLIGNED ALL WRITE TEST\n");
+    sq13.start(p_sequencer.sqr1);
     $display("STRB ALL RANDOM TEST\n");
     sq5.start(p_sequencer.sqr1);
 //     sq2.start(p_sequencer.sqr2);

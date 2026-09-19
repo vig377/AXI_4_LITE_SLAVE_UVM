@@ -9,7 +9,7 @@ uvm_analysis_imp_rd#(trans,subscriber)rd_port;
 trans in_wrt,in_rd;
 
 covergroup wrt_cg;
-  AWADDR:coverpoint in_wrt.AWADDR{bins mult_4={[0:60]} with (item%4==0);
+  AWADDR:coverpoint in_wrt.AWADDR{bins mult_4[]={[0:60]} with (item%4==0);
                               bins non_mult_4={[0:60]} with (item%4!=0);}
   WDATA:coverpoint in_wrt.WDATA{ bins  other=default;}
   AWVALID:coverpoint in_wrt.AWVALID {bins b1={0,1};}

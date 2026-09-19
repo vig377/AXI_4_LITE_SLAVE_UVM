@@ -39,7 +39,7 @@ fork
       rd_drive(read);
       rd_port.item_done();
     end
-join
+join_none
 endtask
 
 task  wrt_drive(trans t);
@@ -120,8 +120,9 @@ endtask
   task rd_data(trans r);
     if(r.RREADY && rd_addr_done==1 )
     begin
-      @(posedge vif.ACLK iff vif.RVALID);
+      @(posedge vif.ACLK iff (vif.RVALID));
       rd_addr_done=0;
+      $display("READ RESP HANDSHAKE DONE");
     end
 endtask
 endclass
