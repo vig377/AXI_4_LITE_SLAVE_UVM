@@ -66,12 +66,34 @@ property read_data_handshake;
   (!RVALID && RREADY)|=>RREADY;
 endproperty
 
+property check_reset;
+@(posedge ACLK) 
+  !ARESETn|->({AWREADY,WREADY,BVALID,BRESP,ARREADY,RVALID,RDATA,RRESP}==0);
+endproperty
+
+property b_resp_stable;
+@(posedge ACLK) disable iff(!ARESETn)
+  (BVALID &&!BREADY)|=>$stable(BRESP);
+endproperty
+
+property rdata_stable;
+@(posedge ACLK) disable iff(!ARESETn)
+  (RVALID && !RREADY)|=>$stable(RDATA);
+endproperty
+
+property rresp_stable;
+@(posedge ACLK) disable iff(!ARESETn)
+  (RVALID && !RREADY)|=>$stable(RRESP);
+endproperty
 
 assert property (write_addr_handshake) $display("WRITE ADDR HANDSHAKE ASSERTION PASSED");else $display("WRITE ADDR HANDSHAKE FAILED");
 assert property (write_data_handshake) $display("WRITE DATA HANDSHAKE ASSERTION PASSED");else $display("WRITE DATA HANDSHAKE FAILED");
 assert property (write_response_handshake) $display("WRITE RESPONSE HANDSHAKE ASSERTION PASSED");else $display("WRITE RESPONSE HANDSHAKE FAILED");
 assert property (read_addr_handshake) $display("READ ADDR HANDSHAKE ASSERTION PASSED");else $display("READ ADDR HANDSHAKE FAILED");
 assert property (read_data_handshake) $display("READ DATA  HANDSHAKE ASSERTION PASSED");else $display("READ DATA HANDSHAKE FAILED");
-
+assert property (check_reset) $display("RESET ASSERTION PASSED"); else $display("RESET ASSERTION FAILED");
+assert property (b_resp_stable) $display("bresp stable assertion passed");else $display("bresp stable assertion failed");
+assert property (rdata_stable) $display("rdata stable assertion passed");else $display("rdata asssertion failed");
+assert property (rresp_stable) $display("rresp stable assertion passed");else $display("rresp stable assertion failed");
 cover property (write_addr_handshake);
 endinterface
